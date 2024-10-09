@@ -1,13 +1,13 @@
 ## OpenMP
 
-- ja garante threads
+- garante threads
 - tira poder do user
   
 _flag -fopenmp_
 
 `#include <omp.h>`: apenas funcoes da lib, directives n precisa do header
 
-Directives = instruções p o compilador
+- directives = instruções p o compilador
 
 uma linha que openMP cria e gerencia pthreads por baixo dos panos
 
@@ -18,7 +18,7 @@ uma linha que openMP cria e gerencia pthreads por baixo dos panos
   }
 ```
 
-// cria numero de threads = n nucleos do pc
+cria numero de threads = n nucleos do pc
 
 
 90% dos codigos:
@@ -30,7 +30,7 @@ uma linha que openMP cria e gerencia pthreads por baixo dos panos
  	for (...) ...
 ```
   
-como distribuir? proxima aula 
+como distribuir? proxima aula de clausulas
 
 default: toma N e divide por num_threads
 
@@ -111,7 +111,7 @@ step: Round Robin
   for...
 ```
 
-  similar a colocar if(pid=0)
+similar a `if(pid=0)`
 
 #### single
 
@@ -121,3 +121,34 @@ step: Round Robin
 ```
 
   primeira thread a chegar
+
+
+#### private variables
+
+```
+  void addVector(int *A, int *B, int *C){
+    int soma = 0;
+    #pragma omp parallel for private(soma)
+        for(int i = 0; i < N; i++){
+            C[i] = A[i] + B[i];
+            soma += C[i];
+            printf("Thread %d calculating C[%d] = A[%d] + B[%d]\n", omp_get_thread_num(), i, i, i);
+        }
+    printf("%d\n\n", soma); //prints 0. each thread has its own soma variable. we need a directive to reduce the variables in every thread.
+}
+```
+
+#### reduction(<operator>: <list_of_variables>)
+
+```
+  void addVector(int *A, int *B, int *C){
+    int soma = 0;
+    #pragma omp parallel for reduction(+:soma) //creates a private variable for each thread and sums them at the end
+        for(int i = 0; i < N; i++){
+            C[i] = A[i] + B[i];
+            soma += C[i];
+            printf("Thread %d calculating C[%d] = A[%d] + B[%d]\n", omp_get_thread_num(), i, i, i);
+        }
+    printf("%d\n\n", soma); //prints soma correctly.
+}
+```
