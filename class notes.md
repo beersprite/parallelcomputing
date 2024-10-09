@@ -7,7 +7,7 @@ _flag -fopenmp_
 
 `#include <omp.h>`: apenas funcoes da lib, directives n precisa do header
 
-Directives = instruções p/ o compilador
+Directives = instruções p o compilador
 
 uma linha que openMP cria e gerencia pthreads por baixo dos panos
 
@@ -18,15 +18,17 @@ uma linha que openMP cria e gerencia pthreads por baixo dos panos
   }
 ```
 
-// cria numero de threads = n cores do pc
+// cria numero de threads = n nucleos do pc
 
 
 90% dos codigos:
 
-FOR não usa chaves
+`paraellel for` não usa chaves
 
- ```#pragma omp parallel for
- 	for (...) ...```
+```
+#pragma omp parallel for
+ 	for (...) ...
+```
   
 como distribuir? proxima aula 
 
