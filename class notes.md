@@ -30,7 +30,7 @@ cria numero de threads = n nucleos do pc
  	for (...) ...
 ```
   
-como distribuir? proxima aula de clausulas
+como distribuir? Vide Cláusulas
 
 default: toma N e divide por num_threads
 
@@ -42,9 +42,9 @@ faz por baixo dos panos
 
 ### Funções
 
-usaremos mais para os seguintes
+Usaremos mais os seguintes:
 
-numero de threads, thread id, scheduling, timer
+número de threads, thread id, scheduling, timer
 
 #### Env Variables
 
@@ -53,21 +53,20 @@ podemos definir variáveis sem mexer no código
 `> export OMP_NUM_THREADS=2`
 
 
-#### Ferramentas de análise de paralelismo (nao paraleliza, mas aponta trechos)
+#### Ferramentas de análise de paralelismo (não paraleliza, mas aponta trechos que podem ser paralelizados)
 
-GPROF
+`GPROF`
 
-intel Vtune
+`Intel Vtune`
 
-AMD uProf
+`AMD uProf`
+
+Em geral, não se paraleliza `printf`/`IO`
+
+`fprintread`, `fscanf`, `fopen`, não paraleliza com openMP
 
 
-nao se paraleliza `printf`/`IO`
-
-`fprintread`, `fscanf`, `fopen`, nao paraleliza com openMP
-
-
-### clausulas
+### Cláusulas
 
 #### for loop scheduling
 
@@ -125,6 +124,8 @@ similar a `if(pid=0)`
 
 #### private variables
 
+pode levar à condição de corrida, pode combinar com diretivas de sincronização.
+
 ```
   void addVector(int *A, int *B, int *C){
     int soma = 0;
@@ -152,3 +153,52 @@ similar a `if(pid=0)`
     printf("%d\n\n", soma); //prints soma correctly.
 }
 ```
+
+#### omp sections
+- pode transformar for em sections (manual), como se `omp section` fossem `pthreads`
+- não usamos em OpenMP
+
+
+### Diretivas de Sincronização
+
+#### pragma omp critical
+
+creates a critical region (mutex)
+
+```
+#pragma omp critical
+{ // lock
+SC;
+} // unlock
+```
+
+#### pragma omp atomic
+
+creates an atomic operation in *hardware*. not the same as critical region, which uses mutex.
+
+**because it's in hardware, it is always faster than mutex.**
+
+```
+#pragma omp atomic
+{
+soma +- partial;
+}
+```
+
+
+
+---
+
+Sobre o trabalho:
+
+- Desconsiderar warmup
+- 5-6 problemas por maratona
+- source code tem entradas e pode usar próprias entradas. (1 trivial, 2 ok, 2 dificeis com resultado irrisório ~5% "perda de tempo" com ponteiros p tudo)
+- escolha de tema e grupos no moodle, FIFS
+- apresentação, nao tem relatorio. (funções que foram parelizadas com o quê, e os resultados obtidos)
+- usar pc santos dummont (40 cores)
+
+  OU
+
+- maratona SSCAD - 3 pessoas + coach no dia 23/24
+- recebe por email as infos
