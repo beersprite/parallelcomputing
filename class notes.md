@@ -5,7 +5,9 @@
   
 _flag -fopenmp_
 
-`#include <omp.h>`: apenas funcoes da lib, directives n precisa do header
+`#include <omp.h>`: apenas funções da lib, _directives_ não precisam do header.
+
+Similar a _<math.h>_, necesssária apenas para funções específicas
 
 - directives = instruções p o compilador
 
@@ -14,11 +16,11 @@ uma linha que openMP cria e gerencia pthreads por baixo dos panos
 ```
 #pragma omp parallel num_threads(NUMERO)
   {
-    //codigo
+    //código
   }
 ```
 
-cria numero de threads = n nucleos do pc
+Cria numero de threads = n núcleos do pc
 
 
 90% dos codigos:
@@ -30,12 +32,12 @@ cria numero de threads = n nucleos do pc
  	for (...) ...
 ```
   
-como distribuir? Vide Cláusulas
+Como distribuir? Vide [Cláusulas](cláusulas)
 
-default: toma N e divide por num_threads
+Default: toma N e divide por num_threads
 
 
-faz por baixo dos panos
+Por baixo dos panos...
 
 `gomp_parallel() = gnu omp`
 
@@ -44,11 +46,11 @@ faz por baixo dos panos
 
 Usaremos mais os seguintes:
 
-número de threads, thread id, scheduling, timer
+`número de threads, thread id, scheduling, timer`
 
-#### Env Variables
+#### Environment Variables
 
-podemos definir variáveis sem mexer no código
+Podemos definir variáveis sem mexer no código
 
 `> export OMP_NUM_THREADS=2`
 
@@ -124,7 +126,7 @@ similar a `if(pid=0)`
 
 #### private variables
 
-pode levar à condição de corrida, pode combinar com diretivas de sincronização.
+Pode levar à condição de corrida, pode combinar com diretivas de sincronização.
 
 ```
   void addVector(int *A, int *B, int *C){
@@ -163,7 +165,7 @@ pode levar à condição de corrida, pode combinar com diretivas de sincronizaç
 
 #### pragma omp critical
 
-creates a critical region (mutex)
+Creates a critical region (mutex)
 
 ```
 #pragma omp critical
@@ -174,7 +176,7 @@ SC;
 
 #### pragma omp atomic
 
-creates an atomic operation in *hardware*. not the same as critical region, which uses mutex.
+Creates an atomic operation in *hardware*. not the same as critical region, which uses mutex.
 
 **because it's in hardware, it is always faster than mutex.**
 
@@ -185,7 +187,7 @@ soma +- partial;
 }
 ```
 
-
+## CUDA
 
 ---
 
