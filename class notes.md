@@ -1,7 +1,8 @@
 ## OpenMP
 
-- garante threads
-- tira poder do user
+- Garante threads
+- Tira poder do user
+- Não altera complexidade
   
 _flag -fopenmp_
 
@@ -16,7 +17,7 @@ uma linha que openMP cria e gerencia pthreads por baixo dos panos
 ```
 #pragma omp parallel num_threads(NUMERO)
   {
-    //código
+    // código
   }
 ```
 
@@ -55,7 +56,9 @@ Podemos definir variáveis sem mexer no código
 `> export OMP_NUM_THREADS=2`
 
 
-#### Ferramentas de análise de paralelismo (não paraleliza, mas aponta trechos que podem ser paralelizados)
+#### Ferramentas de análise de paralelismo
+
+Não paralelizam, mas apontam trechos que podem ser paralelizados
 
 `GPROF`
 
