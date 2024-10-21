@@ -33,7 +33,7 @@ Cria numero de threads = n núcleos do pc
  	for (...) ...
 ```
   
-Como distribuir? Vide [Cláusulas](cláusulas)
+Como distribuir? Vide [Cláusulas](#cláusulas)
 
 Default: toma N e divide por num_threads
 
