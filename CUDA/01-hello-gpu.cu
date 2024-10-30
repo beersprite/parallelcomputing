@@ -11,28 +11,43 @@ void helloCPU()
  * to read "Hello from the GPU!"
  */
 
-__global __ void helloGPU()
+__global__ void helloGPU()
 {
   printf("Hello from the GPU!\n");
 }
 
 int main()
 {
-
-  helloCPU();
+    // regular flow
+    //helloCPU();
+    //helloGPU<<<1, 1>>>(); // <<< NUMBER_OF_BLOCKS, NUMBER_OF_THREADS_PER_BLOCK>>>
+    //cudaDeviceSynchronize(); // host waits for kernel (gpu functions) execution to complete, else gpu never prints and cpu ends process
+    
+    // GPU prints before CPU
+    //helloGPU<<<1, 1>>>(); 
+    //cudaDeviceSynchronize();
+    //helloCPU();
+    
+    // GPU prints before and after CPU
+    helloGPU<<<1, 1>>>();
+    cudaDeviceSynchronize();
+    helloCPU();
+    helloGPU<<<1, 1>>>();
+    cudaDeviceSynchronize();
+    
 
   /*
    * Refactor this call to `helloGPU` so that it launches
    * as a kernel on the GPU.
    */
 
-  helloGPU<<1,1>>();
-
-
   /*
    * Add code below to synchronize on the completion of the
    * `helloGPU` kernel completion before continuing the CPU
    * thread.
    */
-   cudaDeviceSynchronize();
+   
+   // run with
+   // !nvcc -arch=sm_70 -o hello-gpu 01-hello/01-hello-gpu.cu -run
+   
 }
