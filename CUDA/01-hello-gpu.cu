@@ -11,6 +11,11 @@ void helloCPU()
  * to read "Hello from the GPU!"
  */
 
+
+/*
+ * The addition of `__global__` signifies that this function
+ * should be launced on the GPU.
+ */
 __global__ void helloGPU()
 {
   printf("Hello from the GPU!\n");
