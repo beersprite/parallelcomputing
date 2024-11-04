@@ -210,9 +210,13 @@ Sobre o trabalho:
 
 ## CUDA
 
+```nvcc```
+
 ---
 
 ## Open ACC
+
+```nvc```
 
 Host memory (1tb, eg) > Device Memory (12 gb, eg)
 
@@ -239,8 +243,10 @@ WARP: conjunto de 32 threads por Streaming M., que executam por ciclo em cada St
 
 Ideal = threads > cores
 
+| | | |
+| --|-- |-- |
 | Streaming Multiprocessors | Core + Cache L0 | Shared Memory |
-| ---|---|---|
+| | | |
 | L2 | DDR Global Memory|
 
 Single instruction por todos os cores, alterando apenas a variável usada.
