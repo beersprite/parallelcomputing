@@ -190,8 +190,6 @@ soma +- partial;
 }
 ```
 
-## CUDA
-
 ---
 
 Sobre o trabalho:
@@ -207,3 +205,44 @@ Sobre o trabalho:
 
 - maratona SSCAD - 3 pessoas + coach no dia 23/24
 - recebe por email as infos
+
+---
+
+## CUDA
+
+---
+
+## Open ACC
+
+Host memory (1tb, eg) > Device Memory (12 gb, eg)
+
+Poder de processamento do Device é maior.
+
+- Incremental assim como OpenMP
+- pragma com anotações para expor o paralelismo
+
+- Baixa curva de aprendizado
+
+  ```#pragma acc kernels```
+
+  compilador faz o paralelismo, se possível. se não for possível, imprime log com motivo. o desempenho não é necessariamente melhor.
+
+### How GPUs work
+
+Composto de cuda cores (ou outro nome comercial) - ALU sem branch prediction
+
+Cores de 16, 32, 64 bit
+
+Unidades Tensor para multiplicação de matrizes
+
+WARP: conjunto de 32 threads por Streaming M., que executam por ciclo em cada Stream. M. AMD usa 64 threads, devido à arquitetura.
+
+Ideal = threads > cores
+
+| Streaming Multiprocessors | Core + Cache L0 | Shared Memory |
+| ---|---|---|
+| L2 | DDR Global Memory|
+
+Single instruction por todos os cores, alterando apenas a variável usada.
+
+
