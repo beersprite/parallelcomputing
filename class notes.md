@@ -252,3 +252,5 @@ Ideal = threads > cores
 Single instruction por todos os cores, alterando apenas a variável usada.
 
 
+`Profile the code` - quando não saber o que fazer. similar a gprof, mas para nvidia
+
