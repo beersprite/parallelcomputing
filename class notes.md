@@ -231,7 +231,7 @@ Poder de processamento do Device é maior.
 
 Composto de cuda cores (ou outro nome comercial) - ALU sem branch prediction
 
-Cores de 16, 32, 64 bit
+Cores de INT, FLOAT, 32, 64 bit. Indicado por cores
 
 Unidades Tensor para multiplicação de matrizes
 
