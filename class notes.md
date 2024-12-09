@@ -254,3 +254,127 @@ Single instruction por todos os cores, alterando apenas a variável usada.
 
 `Profile the code` - quando não saber o que fazer. similar a gprof, mas para nvidia
 
+
+## Trabalho MPI (2024/2) - entrega relatório 10/01/2025
+
+#### Comandos
+
+linux:
+
+`$ scp -p <private_key>`
+
+ver partições:
+
+`$ sin`
+
+ver status job:
+
+`$ squeue`
+
+copiar arquivo:
+
+`$ cat <arquivo>`
+
+windows:
+
+`winscp`
+
+hype1 hype2 hype3... hype5 (inativo) = nodes
+
+`20 threads + 20 threads`
+
+tempo de comunicação: cada `MPI_Scatter`, `MPI_Bcast` e `MPI_Gather` separados -> codar
+
+do programa inteiro -> como no arquivo original
+
+Como fazer os experimentos dos arquivos:
+
+#### Expicação dos parâmetros do run.slurm
+
+`--name`
+
+nome do job
+
+`--nodes=2`
+
+usar 1 nodo, 2 nodos, 3 nodos and so on for report
+
+`--ntasks=40`
+
+enche uma máquina, depois a outra. 1 nodo = 40, 2 nodos = 80, 3 nodos = 120, etc
+
+`--time=0:30:00`
+
+aloca o tempo da máquina pra rodar os experimentos
+
+`--output=%x_%j.err`
+
+log da máquina - colocar todos os tempos aqui pra facilitar
+
+`--error=%x_%j.err`
+
+log dos erros
+
+`mca ...`
+
+evita erros na compilação - required
+
+`bind-to none ...`
+
+mapeamento do processo pra cada core default. existem outras políticas como `l3`, `socket`, etc
+
+`./mpi_coletiva 2048`
+
+`<arquivo> <tam_matriz>`
+
+arquivo a rodar e o tamanho da matriz. 
+
+#### Recomendação do professor para os experimentos:
+
+tempo de comunicação: cada `MPI_Scatter`, `MPI_Bcast` e `MPI_Gather` separados -> adicionar código para medir tempo com MPI_WTIME() - precisa garantir que o isend terminou, pode usar barreira;
+
+do programa inteiro -> no programa original, já printa execution time -> anotar
+
+tamanho da matriz: 512, 1024, 2048, ..., 32768.
+
+nodos: 1, 2, 3, 4.
+
+ntasks: 40, 80, 120, 160.
+
+---
+
+nao_bloqueante = S.O. faz a comunicação
+
+MPI_ISEND = só faz sentido se o processo 0 computar - não bloqueante
+
+MPI_SEND = bloqueante
+
+MPI_ISEND + MPI_WAIT = wait garante que send terminou.
+
+MPI_IRECV (comunica imediatamente) + MPI_WAIT = como se fosse MPI_RECV, mas pior no processo nao bloqueante - piora no tempo de comunicação. colcoando o MPI_WAIT após receber todas as mensagens, há melhoria no tempo.
+
+Entender essas relações para o relatório. Pode user `Intel vtune` para fazer o profiling - já está instalado nas máquinas.
+
+#### Comando para rodar com MPI
+
+$user@gppd-hpc/~MPI_PDP/
+
+1. Compilar normalmente
+2. Alterar parâmetros se desejar: `vim run.slurm`
+3. Submeter o job com `sbatch run.slurm`
+4. `watch -nl squeue -u <nome_user>`
+5. `ls`
+6. `cat %x_%j.out` para ver o log
+
+---
+
+### Demais aulas: PDP avançado
+
+MPI coletiva
+
+Nvidia Blackwell (processamento geral)
+
+AMD MI300x (processamento geral)
+
+Intel GAUDI3 (acelerador de IA)
+
