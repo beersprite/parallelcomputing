@@ -255,6 +255,50 @@ Single instruction por todos os cores, alterando apenas a variável usada.
 `Profile the code` - quando não saber o que fazer. similar a gprof, mas para nvidia
 
 
+## MPI
+
+### Collective Operations
+
+#### Sync 
+
+`MPI_BARRIER` 
+
+wait for all processes to arrive
+
+#### Communication
+
+`MPI_BCAST`
+
+**todos** processos devem fazer essa chamada, ou terá deadlock). 
+
+ex.: `if (rank==0) mpi_bcast(); else mpi_recv(); //deadlock`
+
+`MPI_GATHER`
+
+junta os dados de todos os processos em um processo. oposto a scatter
+
+`MPI_SCATTER`
+
+scatter dados de um processo a todos os processos. oposto a gather (normalmente usado pra receber o resultado)
+
+#### Reduction 
+
+`MPI_REDUCE`
+
+aplica uma operação sobre os elementos de dadas posições dos vetores de processos. mais eficiente que MPI_SEND para cada processo, por ser coletivo
+
+3x2 -> 1x2  
+
+`T0[A0, A1], T1[A0, A1], T2[A0, A1]` -> `[ A0 op A0 op A0` , A1 op A1 op A1 ]`
+
+`MPI_ALLREDUCE`
+
+reduce + broadcast
+
+3x2 -> 3x2  
+
+`T0[A0, A1], T1[A0, A1], T2[A0, A1]` -> `[ A0 op A0 op A0` , A1 op A1 op A1 ], [ A0 op A0 op A0` , A1 op A1 op A1 ], [ A0 op A0 op A0` , A1 op A1 op A1 ]`
+
 ## Trabalho MPI (2024/2) - entrega relatório 10/01/2025
 
 #### Comandos
