@@ -289,7 +289,7 @@ aplica uma operação sobre os elementos de dadas posições dos vetores de proc
 
 3x2 -> 1x2  
 
-`T0[A0, A1], T1[A0, A1], T2[A0, A1]` -> `[ A0 op A0 op A0` , A1 op A1 op A1 ]`
+`T0[A0, A1], T1[A0, A1], T2[A0, A1]` -> `[ A0 op A0 op A0 , A1 op A1 op A1 ]`
 
 `MPI_ALLREDUCE`
 
@@ -297,7 +297,7 @@ reduce + broadcast
 
 3x2 -> 3x2  
 
-`T0[A0, A1], T1[A0, A1], T2[A0, A1]` -> `[ A0 op A0 op A0` , A1 op A1 op A1 ], [ A0 op A0 op A0` , A1 op A1 op A1 ], [ A0 op A0 op A0` , A1 op A1 op A1 ]`
+`T0[A0, A1], T1[A0, A1], T2[A0, A1]` -> `[ A0 op A0 op A0 , A1 op A1 op A1 ], [ A0 op A0 op A0 , A1 op A1 op A1 ], [ A0 op A0 op A0 , A1 op A1 op A1 ]`
 
 ## Trabalho MPI (2024/2) - entrega relatório 10/01/2025
 
